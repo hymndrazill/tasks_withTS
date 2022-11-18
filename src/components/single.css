@@ -18,7 +18,7 @@
 }
 
 .todos__single-text:focus {
-    outline: none;
+    /* outline: none; */
 }
 .icon {
 margin-left: 10px;
