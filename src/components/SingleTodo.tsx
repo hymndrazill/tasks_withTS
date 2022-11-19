@@ -2,7 +2,7 @@ import {Todo} from "../model"
 import { AiFillEdit,AiFillDelete} from 'react-icons/Ai';
 import {MdDone} from 'react-icons/md'
 import "./single.css"
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 type Props = {
     todo:Todo;
     todos: Todo[];
@@ -12,7 +12,7 @@ type Props = {
 const SingleTodo = ({ todo,todos,setTodos}:Props) => {
     const [edit,setEdit] = useState<boolean>(false);
     const [editTodo, setEditTodo] = useState<string>(todo.todo);
-
+    const inputRef = useRef<HTMLInputElement>(null)
     const handleEdit = ( e : React.FormEvent, id:number ) => {
         e.preventDefault();
         setTodos(todos.map(todo=>(
@@ -36,11 +36,14 @@ const SingleTodo = ({ todo,todos,setTodos}:Props) => {
         )))
     } 
     
-    
+    useEffect(()=>{
+        inputRef.current?.focus();
+    },[edit])
   return (
     <form  onSubmit={(e)=>handleEdit(e,todo.id)} className='todos__single'>
         { edit ? (
             <input 
+            ref={inputRef}
             className="todos__single-text"
             type="text" placeholder="Edit Your Task" 
             value={editTodo} 
